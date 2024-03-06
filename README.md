@@ -1,5 +1,11 @@
 # 🦙🔍 De-redacting Elon's Email with Character-count Constrained Llama2 Decoding
 
+<p align="center">
+<a href="https://twitter.com/khoomeik/status/1765373683449893123">🐦 Twitter</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="https://colab.research.google.com/drive/16xD6xqnyht-vMGLOeyeePfarSYHsXWeo">🔗 Original Colab</a>
+</p>
+
 Many are attempting to de-redact Andrej's email, but Elon's email seems [easier to solve](https://twitter.com/khoomeik/status/1765320782777917635) with constrained decoding on a causal LLM due to its much longer prefix.  Below I present a decoding algorithm that searches for completions that meet the **character-count constraints** imposed by the redaction's word breaks.
 
 Here are a few initial completions it generated that match the required word lengths and may be worth exploring (though it wasn't able to complete these):
@@ -19,9 +25,6 @@ Some notes about the algorithm:
   - the `i * prob_gamma` term increases minimum probability as the sequence gets longer (since possibilities will naturally narrow)
 - for each next token prediction, we recursively continue our decoding process
 
-TODO:
-- [ ] handle subword tokens
-- [ ] convert from recursive to loop + queue
-- [ ] parallelize/batchify the search process
-- [ ] tune the search constraint hyperparams
-- [ ] try a larger model or something fine-tuned on Elon's corpus
+## Contributing
+We love contributions! Please check [Issues](https://github.com/KhoomeiK/deredact/issues) for some high priority directions for improvement with fairly detailed descriptions for how to get started.
+Specifically, [Issue #2](https://github.com/KhoomeiK/deredact/issues/2) is TOP priority right now. Migrating away from this recursive architecture will enable vast speedups via parallelization and more.
